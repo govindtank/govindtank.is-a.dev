@@ -133,6 +133,27 @@
       background-clip: text;
       margin-bottom: 8px;
     }
+    
+    .hero-pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 22px;
+      text-align: left;
+      display: inline-block;
+    }
+    .hero-pre .prompt {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .hero-pre .output {
+      color: var(--accent);
+    }
+    .hero-pre .cursor {
+      color: var(--green);
+      animation: blink 1s infinite;
+    }
     .role {
       color: var(--green);
       font-size: 1.1rem;
@@ -726,14 +747,13 @@
   
   <section id="home" class="hero">
     <div>
-      <pre>
-██████╗  █████╗ ██╗    ██╗███╗   ██╗ ██████╗ ██████╗ ███████╗
-██╔════╝ ██╔══██╗██║    ██║████╗  ██║██╔═══██╗██╔══██╗██╔════╝
-██║  ███╗███████║██║ █╗ ██║██╔██╗ ██║██║   ██║██║  ██║█████╗  
-██║   ██║██╔══██║██║███╗██║██║╚██╗██║██║   ██║██║  ██║██╔══╝  
-╚██████╔╝██║  ██║╚███╔███╔╝██║ ╚████║╚██████╔╝██████╔╝███████╗
- ╚═════╝ ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═══╝ ╚═════╝ ╚═════╝ ╚══════╝
-      </pre>
+      <div class="hero-pre">
+        <span class="prompt">$</span> whoami<br>
+        <span class="output">Govind Tank</span><br>
+        <span class="prompt">$</span> cat role.txt<br>
+        <span class="output">Senior Lead Architect & Android Expert</span><br>
+        <span class="prompt">$</span> <span class="cursor">_</span>
+      </div>
       <h1>Govind Tank</h1>
       <div class="role">Senior Lead Architect & Android Expert</div>
       <div class="typing" id="typing"></div>
