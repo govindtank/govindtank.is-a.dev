@@ -6,6 +6,10 @@
   <title>Govind Tank — Senior Lead Architect & Android Expert</title>
   <meta name="description" content="Portfolio of Govind Tank, Senior Lead Architect specializing in Android, Flutter, Kotlin Multiplatform, AI systems, and high-performance mobile engineering.">
   <link rel="canonical" href="https://govindtank.github.io/govindtank.is-a.dev/">
+
+  <!-- GoatCounter Privacy-Friendly Telemetry -->
+  <script data-goatcounter="https://govindtank.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
     
@@ -720,6 +724,58 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     ::selection { background: var(--accent); color: var(--bg); }
     
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .telemetry-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px;
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .telemetry-badge:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.25);
+      background: rgba(0, 212, 255, 0.1);
+    }
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse-glow 2s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+    .telemetry-label {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      font-size: 0.65rem;
+    }
+    .telemetry-count {
+      color: #fff;
+      font-weight: 700;
+    }
+    .telemetry-unit {
+      color: var(--muted);
+      font-size: 0.65rem;
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       section { padding: 60px 14px; }
@@ -734,14 +790,22 @@
   <nav>
     <div class="wrap">
       <a href="#home" class="logo">govindtank</a>
-      <ul class="nav-links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#apps">apps</a></li>
-        <li><a href="#opensource">open_source</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <div class="telemetry-badge" title="Live Verified Visits">
+          <span class="pulse-dot"></span>
+          <span class="telemetry-label">TELEMETRY</span>
+          <span id="nav-views" class="telemetry-count">--</span>
+          <span class="telemetry-unit">views</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#about">about</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#experience">experience</a></li>
+          <li><a href="#apps">apps</a></li>
+          <li><a href="#opensource">open_source</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
   
@@ -774,6 +838,10 @@
         <div class="stat">
           <div class="stat-num">5+</div>
           <div class="stat-label">Play Store Apps</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="hero-views">--</div>
+          <div class="stat-label">Verified Views</div>
         </div>
       </div>
       
@@ -1283,7 +1351,8 @@
     <p>
       <span class="prompt">$</span> echo "Architecting mobile excellence since 2017" <span style="color: var(--muted);">|</span>
       <span class="accent">© 2017–<span id="year"></span> Govind Tank</span> <span style="color: var(--muted);">|</span>
-      <span style="color: var(--green);">System.Status: Online</span>
+      <span style="color: var(--green);">System.Status: Online</span> <span style="color: var(--muted);">|</span>
+      <span style="color: var(--accent);">Telemetry: <span id="footer-views" style="font-weight:700; color:#fff;">--</span> verified visits</span>
     </p>
     <p style="margin-top: 8px; font-size: 0.7rem; color: var(--muted);">
       Powered by ☕ and late-night debugging sessions
@@ -1293,6 +1362,61 @@
   <script>
     // Dynamic year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Live Verified Telemetry Counter with Smooth Odometer Animation
+    function initTelemetryCounter(path, elementIds) {
+      const duration = 1200;
+      const easeOutExpo = t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+
+      function animateCount(target, el) {
+        if (!el) return;
+        if (target <= 0) {
+          el.textContent = '0';
+          return;
+        }
+        const startTime = performance.now();
+        function step(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          const current = Math.floor(target * easeOutExpo(progress));
+          el.textContent = current.toLocaleString();
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = target.toLocaleString();
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      const normalizedPath = path === 'TOTAL' ? 'TOTAL' : (path.startsWith('/') ? path : '/' + path);
+      const encodedPath = normalizedPath === 'TOTAL' ? 'TOTAL' : encodeURIComponent(normalizedPath);
+      const url = `https://govindtank.goatcounter.com/counter/${encodedPath}.json`;
+
+      fetch(url)
+        .then(res => {
+          if (res.status === 404) return { count: '0', count_unique: '0' };
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(data => {
+          const count = parseInt(data.count || data.count_unique || '0', 10);
+          const validCount = isNaN(count) ? 0 : count;
+          elementIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) animateCount(validCount, el);
+          });
+        })
+        .catch(() => {
+          elementIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = 'Live';
+          });
+        });
+    }
+
+    // Initialize telemetry counter for root path
+    initTelemetryCounter('/', ['nav-views', 'hero-views', 'footer-views']);
     
     // Matrix rain
     const canvas = document.getElementById('matrix');
